@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🦁 Festa Safari – Gabriel e Henrique</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ── RESET & BASE ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:   #FAEBD7;
+    --beige:   #F0D9B5;
+    --green-dark:  #2D5A1B;
+    --green-mid:   #4A7C2F;
+    --green-light: #6FAE3C;
+    --yellow:  #E8C84A;
+    --yellow-light: #F5E07A;
+    --brown:   #8B5E3C;
+    --brown-dark: #5C3A1E;
+    --sand:    #D4A96A;
+    --white:   #FFFDF5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--cream);
+    color: var(--brown-dark);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ── PEGADAS FLUTUANTES (decoração de fundo) ── */
+  .paw-bg {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    overflow: hidden;
+  }
+  .paw-float {
+    position: absolute;
+    opacity: 0.07;
+    font-size: 2rem;
+    animation: floatPaw 18s linear infinite;
+  }
+  @keyframes floatPaw {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.07; }
+    90%  { opacity: 0.07; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ── SEÇÕES ── */
+  section { position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh;
+    background: linear-gradient(180deg, #FAEBD7 0%, #F0D9B5 60%, #E8C89A 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem 1.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* folhas decorativas */
+  .leaf-left, .leaf-right {
+    position: absolute;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .leaf-left  { left: -10px; }
+  .leaf-right { right: -10px; transform: scaleX(-1); }
+
+  .hero-logo {
+    width: min(340px, 88vw);
+    border-radius: 20px;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.18));
+    animation: popIn 0.8s cubic-bezier(0.34,1.56,0.64,1) both;
+    position: relative; z-index: 1;
+  }
+  @keyframes popIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+
+  /* placa de bambu */
+  .placa {
+    margin-top: 1.8rem;
+    background: linear-gradient(135deg, #E8C84A 0%, #F5E07A 50%, #E0B830 100%);
+    border: 4px solid var(--brown);
+    border-radius: 16px;
+    padding: 1rem 2rem;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.20), inset 0 2px 0 rgba(255,255,255,0.4);
+    animation: popIn 0.9s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+    z-index: 1;
+  }
+  .placa::before, .placa::after {
+    content: '';
+    position: absolute;
+    top: -14px;
+    width: 12px; height: 14px;
+    background: var(--brown-dark);
+    border-radius: 3px;
+  }
+  .placa::before { left: 28px; }
+  .placa::after  { right: 28px; }
+
+  .placa h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 5vw, 2.6rem);
+    color: var(--green-dark);
+    line-height: 1.15;
+    text-shadow: 1px 2px 0 rgba(0,0,0,0.12);
+    letter-spacing: 0.5px;
+  }
+  .placa .sub {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: var(--brown-dark);
+    margin-top: 0.3rem;
+  }
+
+  .pata-deco {
+    font-size: 1.4rem;
+    margin: 0 0.4rem;
+    display: inline-block;
+    animation: bounce 1.4s ease-in-out infinite alternate;
+  }
+  @keyframes bounce {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-6px); }
+  }
+
+  /* countdown */
+  .countdown-wrap {
+    margin-top: 1.6rem;
+    z-index: 1;
+    animation: popIn 1s 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  .countdown-label {
+    font-family: 'Fredoka One', cursive;
+    color: var(--green-dark);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .countdown {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cd-box {
+    background: var(--green-dark);
+    color: var(--yellow);
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    min-width: 68px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }
+  .cd-num {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.2rem;
+    line-height: 1;
+    display: block;
+  }
+  .cd-unit {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--brown);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: fadeIn 1s 1.5s both;
+    z-index: 1;
+  }
+  .scroll-hint span { font-size: 1.3rem; animation: bob 1.2s ease-in-out infinite alternate; }
+  @keyframes bob { from { transform: translateY(0); } to { transform: translateY(6px); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+  /* ── DIVIDER SELVA ── */
+  .divider-jungle {
+    width: 100%;
+    line-height: 0;
+    position: relative; z-index: 2;
+  }
+  .divider-jungle svg { display: block; width: 100%; }
+
+  /* ── INFO DA FESTA ── */
+  .festa-info {
+    background: var(--green-dark);
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+    color: var(--cream);
+    position: relative;
+  }
+  .festa-info h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+    color: var(--yellow);
+    margin-bottom: 2rem;
+    text-shadow: 1px 2px 0 rgba(0,0,0,0.3);
+  }
+  .cards-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+  }
+  .card-info {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    flex: 1 1 200px;
+    backdrop-filter: blur(4px);
+    transition: transform 0.2s, background 0.2s;
+  }
+  .card-info:hover { transform: translateY(-4px); background: rgba(255,255,255,0.16); }
+  .card-info .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .card-info .label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--yellow-light);
+    margin-bottom: 0.3rem;
+  }
+  .card-info .valor {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--white);
+  }
+
+  /* mapa btn */
+  .btn-mapa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--yellow);
+    color: var(--green-dark);
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-top: 0.5rem;
+  }
+  .btn-mapa:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+
+  /* ── MAPA EMBED ── */
+  .mapa-section {
+    background: var(--beige);
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+  .mapa-section h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    color: var(--green-dark);
+    margin-bottom: 1.5rem;
+  }
+  .mapa-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    border: 4px solid var(--brown);
+  }
+  .mapa-wrap iframe { display: block; width: 100%; height: 300px; border: none; }
+
+  .btn-group-map {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-top: 1.2rem;
+  }
+  .btn-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+    transition: transform 0.15s;
+  }
+  .btn-nav:hover { transform: scale(1.05); }
+  .btn-nav.waze  { background: #33ccff; color: #1a1a2e; }
+  .btn-nav.gmaps { background: #4285F4; color: #fff; }
+
+  /* ── GALERIA ── */
+  .galeria-section {
+    background: linear-gradient(180deg, var(--beige), var(--cream));
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+  }
+  .galeria-section h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    color: var(--green-dark);
+    margin-bottom: 0.5rem;
+  }
+  .galeria-sub {
+    color: var(--brown);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  /* upload area */
+  .upload-area {
+    max-width: 620px;
+    margin: 0 auto 2rem;
+    border: 3px dashed var(--sand);
+    border-radius: 20px;
+    padding: 2.5rem 1.5rem;
+    background: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+  .upload-area:hover, .upload-area.drag { border-color: var(--green-mid); background: rgba(255,255,255,0.8); }
+  .upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-icon { font-size: 3rem; }
+  .upload-text { font-family: 'Fredoka One', cursive; color: var(--green-dark); font-size: 1.1rem; margin-top: 0.5rem; }
+  .upload-hint { color: var(--brown); font-size: 0.85rem; margin-top: 0.3rem; }
+
+  /* grid de fotos */
+  .foto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.8rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .foto-item {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 3px solid var(--brown);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+    position: relative;
+  }
+  .foto-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .foto-remove {
+    position: absolute;
+    top: 4px; right: 4px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 24px; height: 24px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  .foto-remove:hover { background: rgba(180,0,0,0.75); }
+
+  /* ── CONFIRMAÇÃO ── */
+  .confirm-section {
+    background: var(--cream);
+    padding: 3.5rem 1.5rem 5rem;
+    text-align: center;
+  }
+  .confirm-section h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+    color: var(--green-dark);
+    margin-bottom: 0.5rem;
+  }
+  .confirm-section .intro {
+    color: var(--brown);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form-card {
+    background: var(--white);
+    border: 3px solid var(--sand);
+    border-radius: 24px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem 1.8rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+  }
+
+  .field { margin-bottom: 1.2rem; text-align: left; }
+  .field label {
+    display: block;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.95rem;
+    color: var(--green-dark);
+    margin-bottom: 0.4rem;
+  }
+  .field input, .field select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--sand);
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    color: var(--brown-dark);
+    background: var(--cream);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    appearance: none;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--green-mid);
+    box-shadow: 0 0 0 3px rgba(74,124,47,0.15);
+  }
+
+  .choice-group {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+  .choice-btn {
+    flex: 1;
+    padding: 1rem 0.5rem;
+    border: 3px solid var(--sand);
+    border-radius: 16px;
+    background: var(--cream);
+    cursor: pointer;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.05rem;
+    color: var(--brown-dark);
+    transition: all 0.18s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    line-height: 1.2;
+  }
+  .choice-btn .emoji { font-size: 2rem; }
+  .choice-btn:hover { border-color: var(--green-mid); transform: translateY(-2px); }
+  .choice-btn.selected-yes {
+    border-color: var(--green-mid);
+    background: #EBF5E0;
+    color: var(--green-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 14px rgba(74,124,47,0.25);
+  }
+  .choice-btn.selected-no {
+    border-color: #D4433A;
+    background: #FDECEA;
+    color: #B33029;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 14px rgba(180,50,40,0.2);
+  }
+
+  .extra-fields { transition: all 0.3s; }
+  .extra-fields.hidden { display: none; }
+
+  .btn-enviar {
+    width: 100%;
+    padding: 1rem;
+    background: var(--green-dark);
+    color: var(--yellow);
+    border: none;
+    border-radius: 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.22);
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .btn-enviar:hover { transform: scale(1.03); box-shadow: 0 6px 22px rgba(0,0,0,0.28); }
+  .btn-enviar:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* feedback */
+  .feedback {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 2rem 1rem;
+    animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .feedback.show { display: flex; }
+  .feedback .big-emoji { font-size: 4rem; }
+  .feedback h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    color: var(--green-dark);
+  }
+  .feedback p { color: var(--brown); font-size: 1rem; }
+  .feedback.sad h3 { color: #B33029; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--brown-dark);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  footer span { color: var(--yellow); }
+
+  /* ── STATUS badge ── */
+  #status-msg {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--brown);
+    min-height: 1.2em;
+  }
+
+  /* ── ANIMAÇÃO REVEAL (scroll) ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVO ── */
+  @media (max-width: 480px) {
+    .cards-info { gap: 0.8rem; }
+    .card-info { flex: 1 1 140px; padding: 1rem; }
+    .choice-group { gap: 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── PEGADAS DE FUNDO ── -->
+<div class="paw-bg" id="pawBg"></div>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section class="hero">
+  <!-- folhas SVG decorativas -->
+  <svg class="leaf-left" width="180" height="300" viewBox="0 0 180 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="80"  rx="55" ry="25" fill="#4A7C2F" opacity="0.5" transform="rotate(-40 30 80)"/>
+    <ellipse cx="20" cy="140" rx="65" ry="22" fill="#2D5A1B" opacity="0.45" transform="rotate(-30 20 140)"/>
+    <ellipse cx="40" cy="200" rx="70" ry="24" fill="#6FAE3C" opacity="0.35" transform="rotate(-20 40 200)"/>
+    <ellipse cx="15" cy="260" rx="55" ry="20" fill="#4A7C2F" opacity="0.4"  transform="rotate(-45 15 260)"/>
+  </svg>
+  <svg class="leaf-right" width="180" height="300" viewBox="0 0 180 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="30" cy="80"  rx="55" ry="25" fill="#4A7C2F" opacity="0.5" transform="rotate(-40 30 80)"/>
+    <ellipse cx="20" cy="140" rx="65" ry="22" fill="#2D5A1B" opacity="0.45" transform="rotate(-30 20 140)"/>
+    <ellipse cx="40" cy="200" rx="70" ry="24" fill="#6FAE3C" opacity="0.35" transform="rotate(-20 40 200)"/>
+    <ellipse cx="15" cy="260" rx="55" ry="20" fill="#4A7C2F" opacity="0.4"  transform="rotate(-45 15 260)"/>
+  </svg>
+
+  <img src="convite.png"
+       alt="Convite Safari – Gabriel e Henrique"
+       class="hero-logo"
+       id="heroLogo" />
+
+  <div class="placa">
+    <p class="sub">
+      <span class="pata-deco">🐾</span>
+      Você está convidado para a
+      <span class="pata-deco">🐾</span>
+    </p>
+    <h1>Grande Aventura Safari<br>dos Gêmeos!</h1>
+  </div>
+
+  <div class="countdown-wrap">
+    <p class="countdown-label">🎉 A festa começa em</p>
+    <div class="countdown" id="countdown">
+      <div class="cd-box"><span class="cd-num" id="cd-d">--</span><span class="cd-unit">dias</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-h">--</span><span class="cd-unit">horas</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-m">--</span><span class="cd-unit">min</span></div>
+      <div class="cd-box"><span class="cd-num" id="cd-s">--</span><span class="cd-unit">seg</span></div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    Veja os detalhes
+    <span>⬇️</span>
+  </div>
+</section>
+
+<!-- ── DIVISOR SELVA ── -->
+<div class="divider-jungle">
+  <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,30 C120,70 240,10 360,45 C480,80 600,20 720,50 C840,80 960,15 1080,40 C1200,65 1320,25 1440,50 L1440,80 L0,80 Z" fill="#2D5A1B"/>
+    <!-- arbustos estilizados -->
+    <ellipse cx="80"   cy="65" rx="55" ry="30" fill="#2D5A1B"/>
+    <ellipse cx="240"  cy="70" rx="65" ry="28" fill="#2D5A1B"/>
+    <ellipse cx="440"  cy="60" rx="50" ry="26" fill="#2D5A1B"/>
+    <ellipse cx="650"  cy="68" rx="70" ry="30" fill="#2D5A1B"/>
+    <ellipse cx="860"  cy="62" rx="55" ry="28" fill="#2D5A1B"/>
+    <ellipse cx="1060" cy="70" rx="68" ry="28" fill="#2D5A1B"/>
+    <ellipse cx="1280" cy="64" rx="60" ry="28" fill="#2D5A1B"/>
+    <ellipse cx="1440" cy="68" rx="55" ry="28" fill="#2D5A1B"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════
+     INFO DA FESTA
+══════════════════════════════════ -->
+<section class="festa-info reveal">
+  <h2>🗓️ Detalhes da Aventura</h2>
+  <div class="cards-info">
+    <div class="card-info">
+      <div class="icon">🎂</div>
+      <div class="label">Data do Aniversário</div>
+      <div class="valor">27 de junho de 2025</div>
+    </div>
+    <div class="card-info">
+      <div class="icon">🎉</div>
+      <div class="label">Data da Festa</div>
+      <div class="valor">04 de julho de 2025</div>
+    </div>
+    <div class="card-info">
+      <div class="icon">🕑</div>
+      <div class="label">Horário</div>
+      <div class="valor">12h00</div>
+    </div>
+    <div class="card-info">
+      <div class="icon">📍</div>
+      <div class="label">Local</div>
+      <div class="valor">Trique Traque Buffet Infantil<br>Av. T-3, nº 1955 – St. Bueno<br>Goiânia – GO</div>
+    </div>
+  </div>
+  <a class="btn-mapa" href="#mapa">🗺️ Ver no mapa</a>
+</section>
+
+<!-- ── DIVISOR (invertido) ── -->
+<div class="divider-jungle" style="transform: rotate(180deg)">
+  <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,30 C120,70 240,10 360,45 C480,80 600,20 720,50 C840,80 960,15 1080,40 C1200,65 1320,25 1440,50 L1440,80 L0,80 Z" fill="#2D5A1B"/>
+    <ellipse cx="80"   cy="65" rx="55" ry="30" fill="#2D5A1B"/>
+    <ellipse cx="240"  cy="70" rx="65" ry="28" fill="#2D5A1B"/>
+    <ellipse cx="440"  cy="60" rx="50" ry="26" fill="#2D5A1B"/>
+    <ellipse cx="650"  cy="68" rx="70" ry="30" fill="#2D5A1B"/>
+    <ellipse cx="860"  cy="62" rx="55" ry="28" fill="#2D5A1B"/>
+    <ellipse cx="1060" cy="70" rx="68" ry="28" fill="#2D5A1B"/>
+    <ellipse cx="1280" cy="64" rx="60" ry="28" fill="#2D5A1B"/>
+    <ellipse cx="1440" cy="68" rx="55" ry="28" fill="#2D5A1B"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════
+     MAPA
+══════════════════════════════════ -->
+<section class="mapa-section reveal" id="mapa">
+  <h2>📍 Como chegar à savana?</h2>
+  <div class="mapa-wrap">
+    <iframe
+      title="Trique Traque Buffet Infantil – Goiânia"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3822.4!2d-49.2728!3d-16.7108!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935ef15be92f7a95%3A0xbe5c5c0b49d52d8a!2sTrique%20Traque%20Buffet%20Infantil!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
+      allowfullscreen loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+  <p style="font-size:0.85rem; color:var(--brown); margin-top:0.8rem; font-weight:600;">
+    📌 Av. T-3, nº 1955 – Setor Bueno, Goiânia – GO
+  </p>
+  <div class="btn-group-map">
+    <a class="btn-nav waze"
+       href="https://waze.com/ul?ll=-16.7108,-49.2728&navigate=yes&zoom=17"
+       target="_blank" rel="noopener">
+      🚗 Abrir no Waze
+    </a>
+    <a class="btn-nav gmaps"
+       href="https://maps.app.goo.gl/FvNV7roMD9ZwPRba7"
+       target="_blank" rel="noopener">
+      🗺️ Google Maps
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     GALERIA DE FOTOS
+══════════════════════════════════ -->
+<section class="galeria-section reveal" id="galeria">
+  <h2>📸 Momentos da Savana</h2>
+  <p class="galeria-sub">Adicione fotos dos nossos pequenos exploradores 🦁</p>
+
+  <div class="upload-area" id="uploadArea">
+    <input type="file" id="fotoInput" accept="image/*" multiple />
+    <div class="upload-icon">🖼️</div>
+    <p class="upload-text">Clique ou arraste suas fotos aqui</p>
+    <p class="upload-hint">JPG, PNG, WEBP · Múltiplas fotos</p>
+  </div>
+
+  <div class="foto-grid" id="fotoGrid"></div>
+</section>
+
+<!-- ── DIVISOR ── -->
+<div class="divider-jungle">
+  <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,50 C120,20 240,70 360,35 C480,0 600,60 720,30 C840,0 960,65 1080,40 C1200,15 1320,55 1440,30 L1440,80 L0,80 Z" fill="#FAEBD7"/>
+    <ellipse cx="80"   cy="55" rx="55" ry="30" fill="#FAEBD7"/>
+    <ellipse cx="240"  cy="60" rx="65" ry="28" fill="#FAEBD7"/>
+    <ellipse cx="440"  cy="50" rx="50" ry="26" fill="#FAEBD7"/>
+    <ellipse cx="650"  cy="58" rx="70" ry="30" fill="#FAEBD7"/>
+    <ellipse cx="860"  cy="52" rx="55" ry="28" fill="#FAEBD7"/>
+    <ellipse cx="1060" cy="60" rx="68" ry="28" fill="#FAEBD7"/>
+    <ellipse cx="1280" cy="54" rx="60" ry="28" fill="#FAEBD7"/>
+    <ellipse cx="1440" cy="58" rx="55" ry="28" fill="#FAEBD7"/>
+  </svg>
+</div>
+
+<!-- ══════════════════════════════════
+     CONFIRMAÇÃO
+══════════════════════════════════ -->
+<section class="confirm-section reveal" id="confirmar">
+  <h2>🐾 Vai embarcar na aventura?</h2>
+  <p class="intro">Confirme sua presença para que a savana fique completa! 🌿</p>
+
+  <div class="form-card" id="formCard">
+    <!-- STEP 1: sim ou não -->
+    <div id="stepChoice">
+      <p style="font-family:'Fredoka One',cursive; color:var(--green-dark); font-size:1.1rem; margin-bottom:1rem;">
+        Você consegue vir à festa? 🎉
+      </p>
+      <div class="choice-group">
+        <button class="choice-btn" id="btnSim" onclick="escolher('sim')">
+          <span class="emoji">🎊</span>
+          Sim, estarei lá!
+        </button>
+        <button class="choice-btn" id="btnNao" onclick="escolher('nao')">
+          <span class="emoji">😢</span>
+          Não consigo ir
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2: formulário -->
+    <div id="stepForm" class="extra-fields hidden">
+      <div class="field">
+        <label for="nome">Seu nome completo 🦁</label>
+        <input type="text" id="nome" placeholder="Ex: Maria das Savanas" required />
+      </div>
+      <div class="field">
+        <label for="adultos">Quantos adultos vão? 🧑‍🤝‍🧑</label>
+        <select id="adultos">
+          <option value="1">1 adulto</option>
+          <option value="2">2 adultos</option>
+          <option value="3">3 adultos</option>
+          <option value="4">4+ adultos</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="criancas">Quantas crianças vão? 👧🧒</label>
+        <select id="criancas">
+          <option value="0">Nenhuma criança</option>
+          <option value="1">1 criança</option>
+          <option value="2">2 crianças</option>
+          <option value="3">3 crianças</option>
+          <option value="4">4+ crianças</option>
+        </select>
+      </div>
+      <div class="field" id="campo-motivo" style="display:none">
+        <label for="motivo">Nos conta o motivo (opcional) 💬</label>
+        <input type="text" id="motivo" placeholder="Ex: Estarei viajando..." />
+      </div>
+      <button class="btn-enviar" id="btnEnviar" onclick="enviarConfirmacao()">
+        🦁 Confirmar presença
+      </button>
+      <p id="status-msg"></p>
+    </div>
+
+    <!-- feedback SIM -->
+    <div class="feedback" id="feedbackSim">
+      <span class="big-emoji">🎉</span>
+      <h3>Uhuul! A savana te espera!</h3>
+      <p>Confirmação registrada com sucesso.<br>Até dia 04/07 no Trique Traque! 🦒🦁🐘</p>
+    </div>
+
+    <!-- feedback NÃO -->
+    <div class="feedback sad" id="feedbackNao">
+      <span class="big-emoji">😢</span>
+      <h3>Que pena, vai nos fazer falta!</h3>
+      <p>Obrigado por avisar.<br>A savana vai sentir sua ausência 🐾</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  Festa Safari <span>Gabriel &amp; Henrique · 1 Aninho 🎂</span> · 04 de Julho de 2025
+</footer>
+
+<!-- ══════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════ -->
+<script>
+/* ── PEGADAS FLUTUANTES ── */
+(function(){
+  const paws = ['🐾','🦁','🦒','🐘','🦓','🐒'];
+  const container = document.getElementById('pawBg');
+  for(let i = 0; i < 18; i++){
+    const el = document.createElement('span');
+    el.className = 'paw-float';
+    el.textContent = paws[i % paws.length];
+    el.style.left = Math.random()*100 + 'vw';
+    el.style.animationDelay = (Math.random()*16) + 's';
+    el.style.animationDuration = (14 + Math.random()*10) + 's';
+    el.style.fontSize = (1.2 + Math.random()*1.4) + 'rem';
+    container.appendChild(el);
+  }
+})();
+
+/* ── COUNTDOWN ── */
+(function(){
+  // Data da festa: 04/07/2025 às 12h
+  const festa = new Date('2025-07-04T12:00:00-03:00');
+  function tick(){
+    const agora = new Date();
+    const diff = festa - agora;
+    if(diff <= 0){
+      document.getElementById('countdown').innerHTML =
+        '<span style="font-family:Fredoka One,cursive;color:var(--yellow);font-size:1.4rem">🎉 A festa chegou! 🎉</span>';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+/* ── SCROLL REVEAL ── */
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+})();
+
+/* ── GALERIA LOCAL ── */
+(function(){
+  const input  = document.getElementById('fotoInput');
+  const area   = document.getElementById('uploadArea');
+  const grid   = document.getElementById('fotoGrid');
+
+  area.addEventListener('dragover', e => { e.preventDefault(); area.classList.add('drag'); });
+  area.addEventListener('dragleave', ()=> area.classList.remove('drag'));
+  area.addEventListener('drop', e => {
+    e.preventDefault(); area.classList.remove('drag');
+    addFiles([...e.dataTransfer.files]);
+  });
+  input.addEventListener('change', ()=> addFiles([...input.files]));
+
+  function addFiles(files){
+    files.filter(f => f.type.startsWith('image/')).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const div = document.createElement('div');
+        div.className = 'foto-item';
+        div.innerHTML = `<img src="${e.target.result}" alt="foto safari"/>
+          <button class="foto-remove" title="Remover">✕</button>`;
+        div.querySelector('.foto-remove').onclick = () => div.remove();
+        grid.appendChild(div);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+})();
+
+/* ── FORMULÁRIO DE CONFIRMAÇÃO ── */
+let escolhaAtual = null;
+
+function escolher(op){
+  escolhaAtual = op;
+  document.getElementById('btnSim').className = 'choice-btn' + (op==='sim' ? ' selected-yes' : '');
+  document.getElementById('btnNao').className = 'choice-btn' + (op==='nao' ? ' selected-no' : '');
+  document.getElementById('stepForm').classList.remove('hidden');
+  document.getElementById('campo-motivo').style.display = op==='nao' ? 'block' : 'none';
+  document.getElementById('stepForm').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+async function enviarConfirmacao(){
+  const nome = document.getElementById('nome').value.trim();
+  if(!nome){ alert('Por favor, informe seu nome 🦁'); return; }
+  if(!escolhaAtual){ alert('Escolha se vai ou não à festa!'); return; }
+
+  const btn = document.getElementById('btnEnviar');
+  const statusMsg = document.getElementById('status-msg');
+  btn.disabled = true;
+  btn.textContent = '🦁 Enviando...';
+  statusMsg.textContent = '';
+
+  const dados = {
+    nome,
+    confirmacao: escolhaAtual === 'sim' ? 'Sim ✅' : 'Não ❌',
+    adultos: document.getElementById('adultos').value,
+    criancas: document.getElementById('criancas').value,
+    motivo: document.getElementById('motivo').value || '-',
+    data_hora: new Date().toLocaleString('pt-BR', { timeZone:'America/Sao_Paulo' })
+  };
+
+  /* ── GOOGLE APPS SCRIPT URL ──
+     Substitua a URL abaixo pela sua após criar o script no Google Sheets
+     (veja o README incluído junto ao arquivo)                              */
+  const APPS_SCRIPT_URL = 'SUA_URL_AQUI';
+
+  try {
+    if(APPS_SCRIPT_URL === 'SUA_URL_AQUI'){
+      // MODO DEMONSTRAÇÃO (sem URL configurada)
+      await new Promise(r => setTimeout(r, 1200));
+      mostrarFeedback(escolhaAtual);
+      return;
+    }
+
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dados),
+      mode: 'no-cors'   // Apps Script exige no-cors
+    });
+    mostrarFeedback(escolhaAtual);
+  } catch(err){
+    statusMsg.textContent = '⚠️ Erro ao enviar. Tente novamente.';
+    btn.disabled = false;
+    btn.textContent = '🦁 Confirmar presença';
+  }
+}
+
+function mostrarFeedback(op){
+  document.getElementById('stepChoice').style.display = 'none';
+  document.getElementById('stepForm').style.display   = 'none';
+  if(op === 'sim'){
+    document.getElementById('feedbackSim').classList.add('show');
+  } else {
+    document.getElementById('feedbackNao').classList.add('show');
+  }
+}
+</script>
+
+</body>
+</html>
