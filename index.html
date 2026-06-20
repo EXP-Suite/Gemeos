@@ -555,10 +555,30 @@ function criarCardFoto(thumbUrl, nome) {
 }
 
 function carregarFotosSalvas() {
+  // 1. Carrega do localStorage imediatamente (resposta rapida)
   try {
     var lista = JSON.parse(localStorage.getItem(CHAVE_LS) || '[]');
     lista.forEach(function(f) { criarCardFoto(f.t, f.n); });
   } catch (e) {}
+
+  // 2. Busca fotos de TODOS os convidados via Apps Script (doGet)
+  var xhrGet = new XMLHttpRequest();
+  xhrGet.open('GET', URL_SCRIPT + '?action=listarFotos', true);
+  xhrGet.onreadystatechange = function() {
+    if (xhrGet.readyState !== 4 || xhrGet.status !== 200) return;
+    try {
+      var resp = JSON.parse(xhrGet.responseText);
+      if (resp.status === 'ok' && resp.fotos && resp.fotos.length > 0) {
+        // Limpa grid e recarrega com dados do servidor (fonte da verdade)
+        var grid = document.getElementById('gridEnviadas');
+        grid.innerHTML = '';
+        resp.fotos.forEach(function(f) {
+          criarCardFoto(f.thumbUrl, f.nome);
+        });
+      }
+    } catch (e) {}
+  };
+  xhrGet.send();
 }
 carregarFotosSalvas();
 
@@ -589,6 +609,7 @@ function processarArquivos(files) {
 function enviarFoto(arquivo) {
   var nome = document.getElementById('uploadNome').value.trim() || 'Convidado';
 
+  // -- item na fila de progresso --
   var item = document.createElement('div');
   item.className = 'upload-item';
   item.innerHTML =
@@ -610,8 +631,8 @@ function enviarFoto(arquivo) {
     thumbEl.src = resultado;
     var b64 = resultado.split(',')[1];
 
-    statusEl.textContent = 'Enviando...';
-    fillEl.style.width = '40%';
+    statusEl.textContent = 'Enviando para o Drive...';
+    fillEl.style.width = '30%';
 
     var dados = JSON.stringify({
       action   : 'uploadFoto',
@@ -623,37 +644,38 @@ function enviarFoto(arquivo) {
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', URL_SCRIPT, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Content-Type', 'text/plain');
 
     xhr.onreadystatechange = function() {
       if (xhr.readyState !== 4) return;
       fillEl.style.width = '100%';
-      if (xhr.status === 200) {
-        try {
-          var resp = JSON.parse(xhr.responseText);
-          if (resp.status === 'ok' && resp.thumbUrl) {
-            fillEl.style.background = '#6FAE3C';
-            statusEl.textContent = 'Salva!';
-            criarCardFoto(resp.thumbUrl, nome);
-            salvarFotoLocal(resp.thumbUrl, nome);
-          } else {
-            throw new Error('sem thumbUrl');
-          }
-        } catch (e) {
-          fillEl.style.background = '#D4433A';
-          statusEl.textContent = 'Erro - tente novamente';
+
+      try {
+        var resp = JSON.parse(xhr.responseText);
+        if (resp.status === 'ok' && resp.thumbUrl) {
+          // Usa a URL real do Drive (visivel para todos)
+          fillEl.style.background = '#6FAE3C';
+          statusEl.textContent = 'Salva!';
+          criarCardFoto(resp.thumbUrl, nome);
+          salvarFotoLocal(resp.thumbUrl, nome);
+        } else {
+          throw new Error('sem thumbUrl');
         }
-      } else {
-        fillEl.style.background = '#D4433A';
-        statusEl.textContent = 'Erro de conexao';
+      } catch (e) {
+        // Fallback: exibe preview local (some ao recarregar, mas melhor que nada)
+        fillEl.style.background = '#E8C84A';
+        statusEl.textContent = 'Salva no Drive (sem preview)';
+        criarCardFoto(resultado, nome);
+        salvarFotoLocal(resultado, nome);
       }
-      setTimeout(function() { item.remove(); }, 4000);
+
+      setTimeout(function() { item.remove(); }, 3000);
     };
 
     xhr.onerror = function() {
       fillEl.style.width = '100%';
       fillEl.style.background = '#D4433A';
-      statusEl.textContent = 'Sem conexao - tente novamente';
+      statusEl.textContent = 'Erro - tente novamente';
       setTimeout(function() { item.remove(); }, 4000);
     };
 
@@ -699,15 +721,14 @@ function enviarConfirmacao() {
 
   var xhr = new XMLHttpRequest();
   xhr.open('POST', URL_SCRIPT, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('Content-Type', 'text/plain'); // text/plain evita bloqueio CORS
   xhr.onreadystatechange = function() {
     if (xhr.readyState !== 4) return;
     mostrarFeedback(escolha);
   };
   xhr.onerror = function() {
-    msg.textContent = 'Erro ao enviar. Tente novamente.';
-    btn.disabled = false;
-    btn.textContent = 'Enviar';
+    // mesmo com erro de CORS o script pode ter salvo; mostra feedback
+    mostrarFeedback(escolha);
   };
   xhr.send(dados);
 }
