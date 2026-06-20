@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#2D5A1B">
 <title>Festa Safari - Gabriel e Henrique</title>
-<meta name="description" content="🦁 Voce esta convidado! Festa Safari dos gemeos Gabriel e Henrique - 1 Aninho. 04 de julho de 2026, 12h, Trique Traque Buffet Infantil, Goiania-GO. Confirme sua presenca!">
+<meta name="description" content="🦁 Você está convidado! Festa Safari dos Gêmeos Gabriel e Henrique – 1 Aninho. 04 de julho de 2026, 12h, Trique Traque Buffet Infantil, Goiânia-GO. Confirme sua presença!">
 
 <!-- Open Graph / WhatsApp -->
 <meta property="og:type"         content="website">
 <meta property="og:site_name"    content="Festa Safari Gabriel e Henrique">
 <meta property="og:url"          content="https://exp-suite.github.io/Gemeos/">
-<meta property="og:title"        content="🦁 Voce esta convidado! Festa Safari dos Gemeos 🎉">
-<meta property="og:description"  content="Gabriel e Henrique completam 1 aninho! Venha celebrar no dia 04 de julho de 2026, a partir das 12h, no Trique Traque Buffet Infantil - Goiania. Confirme sua presenca!">
+<meta property="og:title"        content="🦁 Você está convidado! Festa Safari dos Gêmeos 🎉">
+<meta property="og:description"  content="Gabriel e Henrique completam 1 aninho! Venha celebrar no dia 04 de julho de 2026, a partir das 12h, no Trique Traque Buffet Infantil – Goiânia. Confirme sua presença!">
 <meta property="og:image"        content="https://exp-suite.github.io/Gemeos/Foto%20(1).jpeg">
 <meta property="og:image:secure_url" content="https://exp-suite.github.io/Gemeos/Foto%20(1).jpeg">
 <meta property="og:image:type"   content="image/jpeg">
@@ -23,8 +23,8 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="🦁 Voce esta convidado! Festa Safari dos Gemeos 🎉">
-<meta name="twitter:description" content="Gabriel e Henrique completam 1 aninho! 04 de julho de 2026, 12h, Trique Traque - Goiania.">
+<meta name="twitter:title"       content="🦁 Você está convidado! Festa Safari dos Gêmeos 🎉">
+<meta name="twitter:description" content="Gabriel e Henrique completam 1 aninho! 04 de julho de 2026, 12h, Trique Traque – Goiânia.">
 <meta name="twitter:image"       content="https://exp-suite.github.io/Gemeos/Foto%20(1).jpeg">
 <meta name="twitter:image:alt"   content="Festa Safari - Gabriel e Henrique">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
@@ -211,6 +211,120 @@ footer b { color: var(--amarelo); }
   .cd-num { font-size: 1.6rem; }
   .cards { grid-template-columns: 1fr 1fr; }
 }
+
+/* ── CARD DESTAQUE (dia da festa) ── */
+.card-destaque {
+  background: var(--amarelo) !important;
+  border: 3px solid var(--marrom) !important;
+  grid-column: 1 / -1; /* ocupa linha inteira */
+  max-width: 320px;
+  margin: 0 auto;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  animation: pulsa 2s ease-in-out infinite;
+}
+@keyframes pulsa {
+  0%, 100% { transform: scale(1); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+  50%       { transform: scale(1.03); box-shadow: 0 10px 28px rgba(0,0,0,0.32); }
+}
+.card-destaque .card-rotulo { color: var(--verde) !important; font-size: 0.9rem !important; }
+.card-destaque .card-icon   { font-size: 2.2rem; }
+.card-valor-grande {
+  font-size: 1.4rem !important;
+  font-family: 'Fredoka One', cursive;
+  color: var(--verde) !important;
+  line-height: 1.25;
+}
+
+/* ── ANIMAIS FLUTUANTES NA GALERIA ── */
+.animal-float {
+  display: inline-block;
+  animation: flutua 2.5s ease-in-out infinite alternate;
+  font-size: 2rem;
+  margin: 0 0.3rem;
+}
+.animal-float:nth-child(2) { animation-delay: 0.4s; }
+.animal-float:nth-child(3) { animation-delay: 0.8s; }
+.animal-float:nth-child(4) { animation-delay: 1.2s; }
+@keyframes flutua {
+  from { transform: translateY(0) rotate(-5deg); }
+  to   { transform: translateY(-12px) rotate(5deg); }
+}
+
+/* ── BANNER INTERATIVO ANTES DA CONFIRMAÇÃO ── */
+.convite-banner {
+  background: linear-gradient(135deg, var(--verde) 0%, var(--verde2) 100%);
+  color: var(--amarelo);
+  text-align: center;
+  padding: 1.8rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.convite-banner h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  margin-bottom: 0.4rem;
+}
+.convite-banner p {
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 0;
+}
+.patas-animadas {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+.pata-seq {
+  font-size: 1.6rem;
+  animation: pisada 1.6s ease-in-out infinite;
+  opacity: 0;
+}
+.pata-seq:nth-child(1) { animation-delay: 0s; }
+.pata-seq:nth-child(2) { animation-delay: 0.25s; }
+.pata-seq:nth-child(3) { animation-delay: 0.5s; }
+.pata-seq:nth-child(4) { animation-delay: 0.75s; }
+.pata-seq:nth-child(5) { animation-delay: 1s; }
+.pata-seq:nth-child(6) { animation-delay: 1.25s; }
+@keyframes pisada {
+  0%   { transform: scale(0.5) translateY(8px); opacity: 0; }
+  30%  { transform: scale(1.2) translateY(-4px); opacity: 1; }
+  60%  { transform: scale(1)   translateY(0);    opacity: 1; }
+  100% { transform: scale(1)   translateY(0);    opacity: 0; }
+}
+
+/* ── BOTÕES DE NAVEGAÇÃO (Waze/Maps) com hover melhorado ── */
+.btn-nav { position: relative; overflow: hidden; }
+.btn-nav::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.btn-nav:hover::after { transform: scaleX(1); }
+
+/* ── SEÇÃO CONFIRMAÇÃO com zebra safari ── */
+.confirm-sec-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.safari-stripe {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--verde) 0px, var(--verde) 20px,
+    var(--amarelo) 20px, var(--amarelo) 40px,
+    var(--marrom) 40px, var(--marrom) 60px,
+    var(--amarelo) 60px, var(--amarelo) 80px
+  );
+  animation: desliza 4s linear infinite;
+}
+@keyframes desliza { from { background-position: 0 0; } to { background-position: 80px 0; } }
 </style>
 </head>
 <body>
@@ -242,12 +356,12 @@ footer b { color: var(--amarelo); }
   <img class="hero-img" src="convite.png" alt="Festa Safari Gabriel e Henrique" onerror="this.style.display='none'">
 
   <div class="placa">
-    <p class="placa-sub"><span class="pata">&#128062;</span> Voce esta convidado para a <span class="pata">&#128062;</span></p>
-    <h1 class="placa-titulo">Grande Aventura Safari<br>dos Gemeos!</h1>
+    <p class="placa-sub"><span class="pata">&#128062;</span> Você está convidado para a <span class="pata">&#128062;</span></p>
+    <h1 class="placa-titulo">Grande Aventura Safari<br>dos Gêmeos!</h1>
   </div>
 
   <div class="cd-bloco">
-    <p class="cd-titulo">A festa comeca em</p>
+    <p class="cd-titulo">A festa começa em</p>
     <div class="cd-linha">
       <div class="cd-caixa"><span class="cd-num" id="cd-d">--</span><span class="cd-label">dias</span></div>
       <div class="cd-caixa"><span class="cd-num" id="cd-h">--</span><span class="cd-label">horas</span></div>
@@ -256,7 +370,7 @@ footer b { color: var(--amarelo); }
     </div>
   </div>
 
-  <div class="seta-baixo">Ver detalhes <span>&#11015;&#65039;</span></div>
+  <div class="seta-baixo">Ver os detalhes <span>&#11015;&#65039;</span></div>
 </section>
 
 <!-- DIVISOR -->
@@ -274,27 +388,22 @@ footer b { color: var(--amarelo); }
 
 <!-- ===== DETALHES ===== -->
 <section class="detalhes reveal">
-  <h2>&#128197; Detalhes da Aventura</h2>
+  <h2>&#128197; Detalhes da Aventura 🦁</h2>
   <div class="cards">
-    <div class="card">
-      <div class="card-icon">&#127874;</div>
-      <div class="card-rotulo">Aniversario</div>
-      <div class="card-valor">27 de junho de 2026</div>
-    </div>
-    <div class="card">
-      <div class="card-icon">&#127881;</div>
-      <div class="card-rotulo">Festa</div>
-      <div class="card-valor">04 de julho de 2026</div>
+    <div class="card card-destaque">
+      <div class="card-icon">&#127881;&#127881;</div>
+      <div class="card-rotulo">Dia da Festa</div>
+      <div class="card-valor card-valor-grande">04 de Julho<br>de 2026</div>
     </div>
     <div class="card">
       <div class="card-icon">&#128336;</div>
-      <div class="card-rotulo">Horario</div>
+      <div class="card-rotulo">Horário</div>
       <div class="card-valor">12h00</div>
     </div>
     <div class="card">
       <div class="card-icon">&#128205;</div>
       <div class="card-rotulo">Local</div>
-      <div class="card-valor">Trique Traque<br>St. Bueno - GO</div>
+      <div class="card-valor">Trique Traque<br>St. Bueno – GO</div>
     </div>
   </div>
   <a class="btn-mapa" href="#mapa">&#128506;&#65039; Ver no mapa</a>
@@ -315,7 +424,7 @@ footer b { color: var(--amarelo); }
 
 <!-- ===== MAPA ===== -->
 <section class="mapa reveal" id="mapa">
-  <h2>&#128205; Como chegar a savana?</h2>
+  <h2>&#128205; Como chegar à savana?</h2>
   <div class="mapa-frame">
     <iframe
       title="Trique Traque Buffet Infantil"
@@ -323,7 +432,7 @@ footer b { color: var(--amarelo); }
       allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
     </iframe>
   </div>
-  <p class="mapa-end">&#128204; Av. T-3, n 1955 - Setor Bueno, Goiania - GO</p>
+  <p class="mapa-end">&#128204; Av. T-3, nº 1955 – Setor Bueno, Goiânia – GO</p>
   <div class="btns-nav">
     <a class="btn-nav btn-waze" href="https://waze.com/ul?ll=-16.7035435,-49.2757886&navigate=yes&zoom=17" target="_blank" rel="noopener">&#128663; Waze</a>
     <a class="btn-nav btn-gmaps" href="https://maps.app.goo.gl/FvNV7roMD9ZwPRba7" target="_blank" rel="noopener">&#128506;&#65039; Google Maps</a>
@@ -346,20 +455,21 @@ footer b { color: var(--amarelo); }
 <!-- ===== GALERIA ===== -->
 <section class="galeria reveal" id="galeria">
   <h2>&#128247; Momentos da Savana</h2>
-  <p class="galeria-sub">Os pequenos exploradores em acao!</p>
+  <div style="margin-bottom:1rem"><span class="animal-float">&#129409;</span><span class="animal-float">&#129426;</span><span class="animal-float">&#128024;</span><span class="animal-float">&#129427;</span></div>
+  <p class="galeria-sub">Os pequenos exploradores em ação! 🦒🐘</p>
 
   <div class="grid-fotos" id="gridFotos"></div>
 
-  <p class="upload-titulo">Mande uma foto para a galeria!</p>
-  <p class="upload-dica">Sua foto vai aparecer aqui para todos verem</p>
+  <p class="upload-titulo">Mande uma foto para a galeria! 📸</p>
+  <p class="upload-dica">Sua foto vai aparecer aqui para todos verem 🌿</p>
 
   <input type="text" id="uploadNome" placeholder="Seu nome (para identificar a foto)" autocomplete="name">
 
   <div class="upload-area" id="uploadArea">
     <input type="file" id="fotoInput" accept="image/*" multiple>
     <div class="upload-icone">&#128444;&#65039;</div>
-    <p class="upload-txt">Toque aqui para escolher foto</p>
-    <p class="upload-hint">JPG ou PNG - ate 10 MB</p>
+    <p class="upload-txt">Toque aqui para escolher a foto</p>
+    <p class="upload-hint">JPG ou PNG – até 10 MB por foto</p>
   </div>
 
   <div id="filaUpload"></div>
@@ -380,13 +490,26 @@ footer b { color: var(--amarelo); }
 </div>
 
 <!-- ===== CONFIRMACAO ===== -->
+<div class="convite-banner">
+  <h3>&#127881; Vamos celebrar juntos! &#127881;</h3>
+  <p>Confirme sua presença e faça parte dessa aventura safari</p>
+  <div class="patas-animadas">
+    <span class="pata-seq">&#128062;</span>
+    <span class="pata-seq">&#128062;</span>
+    <span class="pata-seq">&#128062;</span>
+    <span class="pata-seq">&#128062;</span>
+    <span class="pata-seq">&#128062;</span>
+    <span class="pata-seq">&#128062;</span>
+  </div>
+</div>
 <section class="confirmacao reveal" id="confirmar">
+  <div class="safari-stripe"></div>
   <h2>&#128062; Vai embarcar na aventura?</h2>
-  <p class="confirmacao-intro">Confirme sua presenca para que a savana fique completa!</p>
+  <p class="confirmacao-intro">Confirme sua presença para que a savana fique completa! 🌿</p>
 
   <div class="form-box">
     <div id="stepEscolha">
-      <p style="font-family:'Fredoka One',cursive;color:#2D5A1B;font-size:0.95rem;margin-bottom:1rem">Voce consegue vir a festa?</p>
+      <p style="font-family:'Fredoka One',cursive;color:#2D5A1B;font-size:0.95rem;margin-bottom:1rem">Você consegue vir à festa? 🎉</p>
       <div class="escolha-grp">
         <button class="btn-escolha" id="btnSim" onclick="escolher('sim')">
           <span class="emoji">&#127882;</span>Sim, estarei la!
@@ -429,18 +552,18 @@ footer b { color: var(--amarelo); }
 
     <div class="feedback" id="feedbackSim">
       <span class="fb-emoji">&#127881;</span>
-      <h3>Uhuu! A savana te espera!</h3>
-      <p>Confirmacao registrada!<br>Ate dia 04/07 no Trique Traque!</p>
+      <h3>Uhuul! A savana te espera!</h3>
+      <p>Confirmação registrada!<br>Até dia 04/07 no Trique Traque! 🦁🦒🐘</p>
     </div>
     <div class="feedback triste" id="feedbackNao">
       <span class="fb-emoji">&#128546;</span>
       <h3>Que pena, vai nos fazer falta!</h3>
-      <p>Obrigado por avisar.<br>A savana vai sentir sua ausencia.</p>
+      <p>Obrigado por avisar.<br>A savana vai sentir sua ausência. 🐾</p>
     </div>
   </div>
 </section>
 
-<footer>Festa Safari <b>Gabriel &amp; Henrique &middot; 1 Aninho &middot; 04 de Julho de 2026</b></footer>
+<footer>Festa Safari <b>Gabriel &amp; Henrique · 1 Aninho 🎂 · 04 de Julho de 2026</b></footer>
 
 <script>
 var URL_SCRIPT = 'https://script.google.com/macros/s/AKfycbzS9g_ZjIvHqQsDODGwuEq-NTWZiKuhT-yHdP0Q_GUq40r_fRrye_yyC5uSElRrHOT0sg/exec';
